@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#050505] text-white;
+  }
+}
+
+@layer utilities {
+  /* Custom utility classes if needed, animations are now in tailwind.config.js */
+}
