@@ -318,10 +318,106 @@ app.put('/api/profile', authenticateToken, async (req, res) => {
 
 // --- ADMIN ROUTES ---
 
+// Get all users
 app.get('/api/admin/users', authenticateToken, isAdmin, async (req, res) => {
   try {
     const result = await pool.query('SELECT id, username, email, rank, reputation, created_at FROM profiles ORDER BY created_at DESC');
     res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Update user rank
+app.put('/api/admin/users/:userId/rank', authenticateToken, isAdmin, async (req, res) => {
+  const { userId } = req.params;
+  const { rank } = req.body;
+  try {
+    const result = await pool.query(
+      'UPDATE profiles SET rank = $1 WHERE id = $2 RETURNING *',
+      [rank, userId]
+    );
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Delete user
+app.delete('/api/admin/users/:userId', authenticateToken, isAdmin, async (req, res) => {
+  const { userId } = req.params;
+  try {
+    await pool.query('DELETE FROM profiles WHERE id = $1', [userId]);
+    res.json({ success: true, message: 'User deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- SETTINGS ROUTES ---
+
+// Get all settings
+app.get('/api/settings', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT key, value FROM settings');
+    const settingsObj = {};
+    result.rows.forEach(row => {
+      settingsObj[row.key] = row.value;
+    });
+    res.json(settingsObj);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Save settings (Array of {key, value})
+app.post('/api/admin/settings', authenticateToken, isAdmin, async (req, res) => {
+  const settings = req.body; // Expecting [{key, value}, ...]
+  try {
+    for (const setting of settings) {
+      await pool.query(
+        'INSERT INTO settings (key, value, updated_at) VALUES ($1, $2, CURRENT_TIMESTAMP) ON CONFLICT (key) DO UPDATE SET value = $2, updated_at = CURRENT_TIMESTAMP',
+        [setting.key, setting.value]
+      );
+    }
+    res.json({ success: true, message: 'Settings updated' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- SPREADSHEETS ROUTES ---
+
+// Get all spreadsheets
+app.get('/api/spreadsheets', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM spreadsheets ORDER BY created_at DESC');
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Add a spreadsheet
+app.post('/api/spreadsheets', authenticateToken, isAdmin, async (req, res) => {
+  const { title, description, url, category, author, items } = req.body;
+  try {
+    const result = await pool.query(
+      'INSERT INTO spreadsheets (title, description, url, category, author, items) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [title, description, url, category, author, items]
+    );
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Delete a spreadsheet
+app.delete('/api/spreadsheets/:id', authenticateToken, isAdmin, async (req, res) => {
+  const { id } = req.params;
+  try {
+    await pool.query('DELETE FROM spreadsheets WHERE id = $1', [id]);
+    res.json({ success: true, message: 'Spreadsheet deleted' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

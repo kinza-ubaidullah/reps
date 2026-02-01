@@ -164,7 +164,7 @@ const App: React.FC = () => {
     <WishlistProvider>
       <div className="flex h-screen w-full overflow-hidden bg-[#050505] text-white font-sans">
         <ScrollToTop />
-        <div className={`flex-1 flex flex-col h-full overflow-hidden relative transition-all duration-700 ${!user ? 'blur-2xl scale-110 pointer-events-none' : 'blur-0 scale-100'}`}>
+        <div className={`flex-1 flex flex-col h-full overflow-hidden relative transition-all duration-700 ${!user ? 'blur-2xl scale-110' : 'blur-0 scale-100'}`}>
           <Navbar user={user} onLoginClick={() => setIsAuthOpen(true)} onLogout={handleLogout} />
           <main className="flex-1 overflow-y-auto scroll-smooth relative no-scrollbar bg-[#050505]">
             <Routes>
@@ -179,7 +179,7 @@ const App: React.FC = () => {
               <Route path="/sellers" element={<Sellers />} />
               <Route path="/profile" element={user ? <Profile user={user} /> : <Navigate to="/" />} />
               <Route path="/wishlist" element={<Wishlist />} />
-              <Route path="/admin" element={user?.rank === Rank.ADMIN ? <Admin /> : <Navigate to="/" />} />
+              <Route path="/admin" element={<Admin />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>

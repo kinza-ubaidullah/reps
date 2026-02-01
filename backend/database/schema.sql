@@ -31,6 +31,8 @@ CREATE TABLE IF NOT EXISTS spreadsheets (
   title VARCHAR(255) NOT NULL,
   description TEXT,
   url TEXT NOT NULL,
+  author VARCHAR(100),
+  items VARCHAR(50),
   category VARCHAR(100),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -85,6 +87,14 @@ CREATE TABLE IF NOT EXISTS shipping_lines (
   delivery_days_max INTEGER,
   features TEXT[], -- Array of features
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create settings table
+CREATE TABLE IF NOT EXISTS settings (
+  id SERIAL PRIMARY KEY,
+  key VARCHAR(255) UNIQUE NOT NULL,
+  value TEXT,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Create indexes for better performance
