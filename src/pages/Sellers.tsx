@@ -103,8 +103,8 @@ export const Sellers: React.FC = () => {
                                 key={cat}
                                 onClick={() => setCategory(cat)}
                                 className={`px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-colors border ${category === cat
-                                        ? 'bg-primary text-black border-primary'
-                                        : 'bg-[#1A1A1A] text-[#888] border-white/5 hover:text-white'
+                                    ? 'bg-primary text-black border-primary'
+                                    : 'bg-[#1A1A1A] text-[#888] border-white/5 hover:text-white'
                                     }`}
                             >
                                 {cat}

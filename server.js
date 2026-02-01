@@ -35,6 +35,11 @@ app.use((req, res, next) => {
   next();
 });
 
+// Root Route
+app.get('/', (req, res) => {
+  res.send('AnyReps Backend API is running. Access endpoints via /api/...');
+});
+
 // Database Connection
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
