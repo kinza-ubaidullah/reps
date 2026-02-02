@@ -2,23 +2,26 @@ import pkg from 'pg';
 const { Pool } = pkg;
 import 'dotenv/config';
 
-const isProduction = process.env.NODE_ENV === 'production' || !!process.env.RAILWAY_ENVIRONMENT;
+const isProduction = process.env.NODE_ENV === 'production' || !!process.env.RAILWAY_ENVIRONMENT || !!process.env.RAILWAY_PUBLIC_DOMAIN;
 
-console.log(`📡 [Database] Attempting connection...`);
-console.log(`📡 [Database] URL Available: ${!!process.env.DATABASE_URL}`);
-console.log(`📡 [Database] SSL Mode: ${isProduction ? 'REQUIRED' : 'OFF'}`);
+console.log('--- DATABASE INITIALIZATION ---');
+console.log('Environment:', process.env.NODE_ENV);
+console.log('Railway Env:', !!process.env.RAILWAY_ENVIRONMENT);
+console.log('DATABASE_URL Present:', !!process.env.DATABASE_URL);
+
+const dbUrl = process.env.DATABASE_URL;
 
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: dbUrl,
     ssl: isProduction ? { rejectUnauthorized: false } : false
 });
 
 pool.on('connect', () => {
-    console.log('✅ [Database] Connected successfully');
+    console.log('✅ [Database] Pool connected successfully');
 });
 
 pool.on('error', (err) => {
-    console.error('❌ [Database] Unexpected error on idle client', err);
+    console.error('❌ [Database] Pool Error:', err.message);
 });
 
 export default pool;
