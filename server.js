@@ -593,4 +593,5 @@ app.listen(PORT, () => {
   console.log(`🚀 [ANYREPS V2] Server running on port ${PORT}`);
   console.log(`📅 Started at: ${new Date().toLocaleString()}`);
   console.log(`🔐 Social Login Auth: ENABLED`);
+  console.log(`✅ Express 5 Fix: APPLIED`);
 });
