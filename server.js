@@ -105,7 +105,8 @@ app.get('/api/auth/google/callback',
       JWT_SECRET
     );
     // Redirect to frontend with token
-    res.redirect(`${process.env.FRONTEND_URL}?token=${token}&auth=success`);
+    const frontendUrl = process.env.FRONTEND_URL || 'https://reps-tau.vercel.app';
+    res.redirect(`${frontendUrl}?token=${token}&auth=success`);
   }
 );
 
@@ -123,7 +124,8 @@ app.get('/api/auth/discord/callback',
       JWT_SECRET
     );
     // Redirect to frontend with token
-    res.redirect(`${process.env.FRONTEND_URL}?token=${token}&auth=success`);
+    const frontendUrl = process.env.FRONTEND_URL || 'https://reps-tau.vercel.app';
+    res.redirect(`${frontendUrl}?token=${token}&auth=success`);
   }
 );
 
