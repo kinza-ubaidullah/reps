@@ -69,44 +69,21 @@ const App: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Handle OAuth callback
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get('token');
-    const authStatus = urlParams.get('auth');
-
-    if (token && authStatus === 'success') {
-      api.setToken(token);
-      // Fetch user data
-      api.get('/auth/me')
-        .then((userData) => {
-          setUser({
-            id: userData.id,
-            username: userData.username,
-            email: userData.email,
-            avatar: userData.avatar_url,
-            banner: userData.banner_url,
-            rank: userData.rank as Rank,
-            reputation: userData.reputation,
-            joinDate: userData.created_at,
-            description: userData.description
-          });
-          setIsAuthOpen(false);
-          setSessionLoading(false);
-          // Clean URL
-          window.history.replaceState({}, document.title, '/');
-        })
-        .catch((err) => {
-          console.error('OAuth callback error:', err);
-          api.logout();
-          setIsAuthOpen(true);
-          setSessionLoading(false);
-        });
-    }
-  }, []);
-
   useEffect(() => {
     const initAuth = async () => {
+      // 1. Check for OAuth callback params
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get('token');
+      const authStatus = urlParams.get('auth');
+
+      if (token && authStatus === 'success') {
+        console.log("OAuth Success: Setting token");
+        api.setToken(token);
+        // Clean URL immediately
+        window.history.replaceState({}, document.title, '/');
+      }
+
+      // 2. Validate Token (whether from OAuth or LocalStorage)
       if (api.isLoggedIn()) {
         try {
           const userData = await api.get('/auth/me');
@@ -121,7 +98,9 @@ const App: React.FC = () => {
             joinDate: userData.created_at,
             description: userData.description
           });
+          setIsAuthOpen(false);
         } catch (err) {
+          console.error("Auth Validation Failed:", err);
           api.logout();
           setIsAuthOpen(true);
         }
