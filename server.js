@@ -1,7 +1,6 @@
 
 import express from 'express';
-import pkg from 'pg';
-const { Pool } = pkg;
+import pool from './backend/config/db.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import cors from 'cors';
@@ -59,10 +58,7 @@ app.get('/', (req, res) => {
   res.send('AnyReps Backend API is running. Access endpoints via /api/...');
 });
 
-// Database Connection
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
+// Database Connection (Imported from db.js)
 
 const JWT_SECRET = process.env.JWT_SECRET || 'anyreps_secret_key_2024_secure';
 

@@ -1,12 +1,7 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as DiscordStrategy } from 'passport-discord';
-import pkg from 'pg';
-const { Pool } = pkg;
-
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-});
+import pool from './db.js';
 
 const getBackendUrl = () => {
     if (process.env.BACKEND_URL) return process.env.BACKEND_URL;
