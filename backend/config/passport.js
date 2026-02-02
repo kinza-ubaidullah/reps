@@ -8,9 +8,17 @@ const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
 });
 
-const BACKEND_URL = process.env.RAILWAY_PUBLIC_DOMAIN
-    ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`
-    : (process.env.BACKEND_URL || 'https://reps-production.up.railway.app');
+const getBackendUrl = () => {
+    if (process.env.BACKEND_URL) return process.env.BACKEND_URL;
+    // If we are on Railway, use the production domain
+    if (process.env.RAILWAY_ENVIRONMENT || process.env.RAILWAY_PUBLIC_DOMAIN) {
+        return 'https://reps-production.up.railway.app';
+    }
+    return `http://localhost:${process.env.PORT || 3001}`;
+};
+
+const BACKEND_URL = getBackendUrl();
+console.log(`[Passport] Callback Base URL: ${BACKEND_URL}`);
 
 // Google OAuth Strategy
 passport.use(
