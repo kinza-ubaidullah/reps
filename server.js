@@ -106,11 +106,12 @@ app.get('/api/auth/google/callback',
     );
     // Redirect to frontend with token
     // Determine Frontend URL
-    let frontendUrl = 'http://localhost:3000'; // Default to localhost
+    // FORCE PRODUCTION REDIRECT FOR NOW TO DEBUG
+    let frontendUrl = 'https://reps-tau.vercel.app';
 
-    // Check explicitly for Railway/Production environment
-    if (process.env.RAILWAY_ENVIRONMENT || process.env.NODE_ENV === 'production' || process.env.RAILWAY_PUBLIC_DOMAIN) {
-      frontendUrl = 'https://reps-tau.vercel.app';
+    // Only use localhost if explicitly running locally without these env vars
+    if (!process.env.RAILWAY_ENVIRONMENT && !process.env.RAILWAY_PUBLIC_DOMAIN && process.env.NODE_ENV !== 'production') {
+      frontendUrl = 'http://localhost:3000';
     }
 
     console.log(`[Auth Success] User: ${req.user.email} (${req.user.id})`);
@@ -135,11 +136,12 @@ app.get('/api/auth/discord/callback',
     );
     // Redirect to frontend with token
     // Determine Frontend URL
-    let frontendUrl = 'http://localhost:3000'; // Default to localhost
+    // FORCE PRODUCTION REDIRECT FOR NOW TO DEBUG
+    let frontendUrl = 'https://reps-tau.vercel.app';
 
-    // Check explicitly for Railway/Production environment
-    if (process.env.RAILWAY_ENVIRONMENT || process.env.NODE_ENV === 'production' || process.env.RAILWAY_PUBLIC_DOMAIN) {
-      frontendUrl = 'https://reps-tau.vercel.app';
+    // Only use localhost if explicitly running locally without these env vars
+    if (!process.env.RAILWAY_ENVIRONMENT && !process.env.RAILWAY_PUBLIC_DOMAIN && process.env.NODE_ENV !== 'production') {
+      frontendUrl = 'http://localhost:3000';
     }
 
     console.log(`[Auth Success] User: ${req.user.email} (${req.user.id})`);
