@@ -30,10 +30,15 @@ passport.use(
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
-                const email = profile.emails[0].value;
-                const username = profile.displayName;
-                const avatar_url = profile.photos[0]?.value;
+                const email = profile.emails?.[0]?.value;
+                const username = profile.displayName || profile.username;
+                const avatar_url = profile.photos?.[0]?.value;
                 const google_id = profile.id;
+
+                if (!email) {
+                    console.error('❌ Google Auth Error: No email found in profile');
+                    return done(new Error('No email found in Google profile'), null);
+                }
 
                 // Check if user exists with this Google ID
                 let result = await pool.query('SELECT * FROM profiles WHERE google_id = $1', [google_id]);
@@ -62,6 +67,7 @@ passport.use(
 
                 return done(null, user);
             } catch (error) {
+                console.error('❌ Detailed Google Auth Error:', error);
                 return done(error, null);
             }
         }
@@ -80,11 +86,16 @@ passport.use(
         async (accessToken, refreshToken, profile, done) => {
             try {
                 const email = profile.email;
-                const username = profile.username;
+                const username = profile.username || profile.global_name;
                 const avatar_url = profile.avatar
                     ? `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png`
                     : 'https://assets-global.website-files.com/6257adef93867e3ed14ed604/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png';
                 const discord_id = profile.id;
+
+                if (!email) {
+                    console.error('❌ Discord Auth Error: No email found in profile');
+                    return done(new Error('No email found in Discord profile'), null);
+                }
 
                 // Check if user exists with this Discord ID
                 let result = await pool.query('SELECT * FROM profiles WHERE discord_id = $1', [discord_id]);
@@ -113,6 +124,7 @@ passport.use(
 
                 return done(null, user);
             } catch (error) {
+                console.error('❌ Detailed Discord Auth Error:', error);
                 return done(error, null);
             }
         }
