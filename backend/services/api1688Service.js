@@ -3,6 +3,13 @@ import axios from 'axios';
 const RAPIDAPI_HOST = process.env.RAPIDAPI_HOST || '1688-datahub.p.rapidapi.com';
 const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY || '';
 
+// Check for API Key presence
+if (!RAPIDAPI_KEY) {
+  console.warn('⚠️ [1688 Service] RAPIDAPI_KEY is missing! 1688 search will not work.');
+} else {
+  console.log('✅ [1688 Service] RAPIDAPI_KEY detected');
+}
+
 // Base axios instance for 1688 API
 const api1688 = axios.create({
   baseURL: `https://${RAPIDAPI_HOST}`,
