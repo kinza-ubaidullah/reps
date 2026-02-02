@@ -593,5 +593,7 @@ app.listen(PORT, () => {
   console.log(`🚀 [ANYREPS V2] Server running on port ${PORT}`);
   console.log(`📅 Started at: ${new Date().toLocaleString()}`);
   console.log(`🔐 Social Login Auth: ENABLED`);
+  console.log(`🌍 Environment: ${process.env.NODE_ENV}`);
+  console.log(`🔗 Backend URL: ${process.env.BACKEND_URL || 'NOT SET'}`);
   console.log(`✅ Express 5 Fix: APPLIED`);
 });
