@@ -2,14 +2,23 @@ import pkg from 'pg';
 const { Pool } = pkg;
 import 'dotenv/config';
 
+const isProduction = process.env.NODE_ENV === 'production' || !!process.env.RAILWAY_ENVIRONMENT;
+
+console.log(`📡 [Database] Attempting connection...`);
+console.log(`📡 [Database] URL Available: ${!!process.env.DATABASE_URL}`);
+console.log(`📡 [Database] SSL Mode: ${isProduction ? 'REQUIRED' : 'OFF'}`);
+
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+    ssl: isProduction ? { rejectUnauthorized: false } : false
+});
+
+pool.on('connect', () => {
+    console.log('✅ [Database] Connected successfully');
 });
 
 pool.on('error', (err) => {
-    console.error('❌ Unexpected error on idle client', err);
-    process.exit(-1);
+    console.error('❌ [Database] Unexpected error on idle client', err);
 });
 
 export default pool;
