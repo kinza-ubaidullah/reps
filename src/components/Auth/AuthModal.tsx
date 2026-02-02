@@ -40,7 +40,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLogin, isForced
 
   const handleSocialLogin = async (platform: string) => {
     // Redirect to backend OAuth endpoint
-    const apiBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+    const apiBaseUrl = import.meta.env.VITE_API_URL || '/api';
     // Remove trailing slash if present to avoid double slashes
     const baseUrl = apiBaseUrl.endsWith('/') ? apiBaseUrl.slice(0, -1) : apiBaseUrl;
 

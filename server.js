@@ -7,8 +7,13 @@ import bcrypt from 'bcryptjs';
 import cors from 'cors';
 import session from 'express-session';
 import 'dotenv/config';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import api1688 from './backend/services/api1688Service.js';
 import passport from './backend/config/passport.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(cors({
@@ -559,6 +564,15 @@ app.get('/api/1688/reviews/:itemId', async (req, res) => {
   }
 });
 
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

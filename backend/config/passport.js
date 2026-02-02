@@ -8,13 +8,15 @@ const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
 });
 
+const BACKEND_URL = process.env.BACKEND_URL || `http://localhost:${process.env.PORT || 3001}`;
+
 // Google OAuth Strategy
 passport.use(
     new GoogleStrategy(
         {
             clientID: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            callbackURL: `http://localhost:${process.env.PORT || 3001}/api/auth/google/callback`,
+            callbackURL: `${BACKEND_URL}/api/auth/google/callback`,
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
@@ -62,7 +64,7 @@ passport.use(
         {
             clientID: process.env.DISCORD_CLIENT_ID,
             clientSecret: process.env.DISCORD_CLIENT_SECRET,
-            callbackURL: `http://localhost:${process.env.PORT || 3001}/api/auth/discord/callback`,
+            callbackURL: `${BACKEND_URL}/api/auth/discord/callback`,
             scope: ['identify', 'email'],
         },
         async (accessToken, refreshToken, profile, done) => {
