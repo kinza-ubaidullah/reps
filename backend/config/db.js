@@ -2,7 +2,7 @@ import pkg from 'pg';
 const { Pool } = pkg;
 
 // Only load dotenv in local development
-if (process.env.NODE_ENV !== 'production' && !process.env.RAILWAY_ENVIRONMENT) {
+if (process.env.NODE_ENV !== 'production' && !process.env.RAILWAY_ENVIRONMENT && !process.env.RAILWAY_PUBLIC_DOMAIN) {
     const dotenv = await import('dotenv');
     dotenv.config();
 }
@@ -11,6 +11,7 @@ const isProduction = process.env.NODE_ENV === 'production' || !!process.env.RAIL
 
 console.log('--- DATABASE DEBUG ---');
 console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('RAILWAY_ENV:', !!process.env.RAILWAY_ENVIRONMENT);
 console.log('DATABASE_URL Present:', !!process.env.DATABASE_URL);
 
 // Masked URL for logging (masks password)
@@ -27,7 +28,7 @@ const pool = new Pool({
 pool.query('SELECT NOW()', (err, res) => {
     if (err) {
         console.error('❌ [Database] Initial connection test failed:', err.message);
-        console.error('❌ [Database] Target Host:', rawUrl.split('@')[1] || 'unknown');
+        console.error('❌ [Database] Target Host:', rawUrl.includes('@') ? rawUrl.split('@')[1] : 'unknown');
     } else {
         console.log('✅ [Database] Initial connection test success:', res.rows[0].now);
     }
