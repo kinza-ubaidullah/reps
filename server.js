@@ -105,12 +105,15 @@ app.get('/api/auth/google/callback',
       JWT_SECRET
     );
     // Redirect to frontend with token
-    // Redirect to frontend with token
-    let frontendUrl = process.env.FRONTEND_URL;
-    // Force production URL if env var is localhost but we are running on Railway (or if not set)
-    if (!frontendUrl || frontendUrl.includes('localhost')) {
-      frontendUrl = 'https://reps-tau.vercel.app';
+    const host = req.get('host');
+    let frontendUrl = 'https://reps-tau.vercel.app'; // Default to production
+
+    // If running locally, switch to localhost
+    if (host && (host.includes('localhost') || host.includes('127.0.0.1'))) {
+      frontendUrl = 'http://localhost:3000';
     }
+
+    console.log(`[Auth] Redirecting to ${frontendUrl}`);
     res.redirect(`${frontendUrl}?token=${token}&auth=success`);
   }
 );
@@ -129,11 +132,15 @@ app.get('/api/auth/discord/callback',
       JWT_SECRET
     );
     // Redirect to frontend with token
-    // Redirect to frontend with token
-    let frontendUrl = process.env.FRONTEND_URL;
-    if (!frontendUrl || frontendUrl.includes('localhost')) {
-      frontendUrl = 'https://reps-tau.vercel.app';
+    const host = req.get('host');
+    let frontendUrl = 'https://reps-tau.vercel.app'; // Default to production
+
+    // If running locally, switch to localhost
+    if (host && (host.includes('localhost') || host.includes('127.0.0.1'))) {
+      frontendUrl = 'http://localhost:3000';
     }
+
+    console.log(`[Auth] Redirecting to ${frontendUrl}`);
     res.redirect(`${frontendUrl}?token=${token}&auth=success`);
   }
 );
