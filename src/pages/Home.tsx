@@ -57,6 +57,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ title, price, brand, image, t
           src={image}
           alt={title}
           className="w-[85%] h-[85%] object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-500 -rotate-[12deg] translate-y-2"
+          referrerPolicy="no-referrer"
         />
       </div>
 
@@ -407,6 +408,7 @@ export const Home: React.FC = () => {
   const formatImageUrl = (url: string) => {
     if (!url) return '';
     if (url.startsWith('//')) return `https:${url}`;
+    if (!url.startsWith('http')) return `https://${url.replace(/^\/+/, '')}`;
     return url;
   };
 

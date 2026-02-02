@@ -26,6 +26,7 @@ import { useWishlist } from '../context/WishlistContext';
 const formatImageUrl = (url: string) => {
     if (!url) return '';
     if (url.startsWith('//')) return `https:${url}`;
+    if (!url.startsWith('http')) return `https://${url.replace(/^\/+/, '')}`;
     return url;
 };
 
@@ -123,7 +124,12 @@ const ProductDetailModal = ({ product, onClose }: { product: Product, onClose: (
                 {/* Left: Gallery */}
                 <div className="lg:w-1/2 p-4 md:p-8 flex flex-col gap-4">
                     <div className="aspect-square bg-[#050505] rounded-[32px] overflow-hidden border border-white/5 relative group">
-                        <img src={activeImg || ''} className="w-full h-full object-contain" alt="Main" />
+                        <img
+                            src={activeImg || ''}
+                            className="w-full h-full object-contain"
+                            alt="Main"
+                            referrerPolicy="no-referrer"
+                        />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
                     </div>
                     {gallery.length > 0 && (
@@ -134,7 +140,12 @@ const ProductDetailModal = ({ product, onClose }: { product: Product, onClose: (
                                     onClick={() => setActiveImg(img.url)}
                                     className={`w-20 h-20 rounded-xl border-2 shrink-0 transition-all overflow-hidden ${activeImg === img.url ? 'border-primary' : 'border-transparent opacity-50 hover:opacity-100'}`}
                                 >
-                                    <img src={img.url} className="w-full h-full object-cover" alt={`thumb-${i}`} />
+                                    <img
+                                        src={img.url}
+                                        className="w-full h-full object-cover"
+                                        alt={`thumb-${i}`}
+                                        referrerPolicy="no-referrer"
+                                    />
                                 </button>
                             ))}
                         </div>
@@ -422,7 +433,12 @@ export const Search: React.FC = () => {
                             <div key={`${product.id}-${idx}`} className="bg-[#111] border border-white/5 rounded-[32px] overflow-hidden group hover:border-white/10 transition-all animate-fade-in-up hover:-translate-y-1">
                                 <div className="aspect-square bg-[#050505] relative overflow-hidden">
                                     {product.image ? (
-                                        <img src={product.image} alt={product.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                        <img
+                                            src={product.image}
+                                            alt={product.title}
+                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                            referrerPolicy="no-referrer"
+                                        />
                                     ) : (
                                         <div className="w-full h-full flex items-center justify-center text-[#222]">
                                             <ImageIcon size={48} />
