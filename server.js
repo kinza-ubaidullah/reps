@@ -105,15 +105,17 @@ app.get('/api/auth/google/callback',
       JWT_SECRET
     );
     // Redirect to frontend with token
-    const host = req.get('host');
-    let frontendUrl = 'https://reps-tau.vercel.app'; // Default to production
+    // Determine Frontend URL
+    let frontendUrl = 'http://localhost:3000'; // Default to localhost
 
-    // If running locally, switch to localhost
-    if (host && (host.includes('localhost') || host.includes('127.0.0.1'))) {
-      frontendUrl = 'http://localhost:3000';
+    // Check explicitly for Railway/Production environment
+    if (process.env.RAILWAY_ENVIRONMENT || process.env.NODE_ENV === 'production' || process.env.RAILWAY_PUBLIC_DOMAIN) {
+      frontendUrl = 'https://reps-tau.vercel.app';
     }
 
-    console.log(`[Auth] Redirecting to ${frontendUrl}`);
+    console.log(`[Auth Success] User: ${req.user.email} (${req.user.id})`);
+    console.log(`[Auth Redirect] Target: ${frontendUrl}`);
+
     res.redirect(`${frontendUrl}?token=${token}&auth=success`);
   }
 );
@@ -132,15 +134,17 @@ app.get('/api/auth/discord/callback',
       JWT_SECRET
     );
     // Redirect to frontend with token
-    const host = req.get('host');
-    let frontendUrl = 'https://reps-tau.vercel.app'; // Default to production
+    // Determine Frontend URL
+    let frontendUrl = 'http://localhost:3000'; // Default to localhost
 
-    // If running locally, switch to localhost
-    if (host && (host.includes('localhost') || host.includes('127.0.0.1'))) {
-      frontendUrl = 'http://localhost:3000';
+    // Check explicitly for Railway/Production environment
+    if (process.env.RAILWAY_ENVIRONMENT || process.env.NODE_ENV === 'production' || process.env.RAILWAY_PUBLIC_DOMAIN) {
+      frontendUrl = 'https://reps-tau.vercel.app';
     }
 
-    console.log(`[Auth] Redirecting to ${frontendUrl}`);
+    console.log(`[Auth Success] User: ${req.user.email} (${req.user.id})`);
+    console.log(`[Auth Redirect] Target: ${frontendUrl}`);
+
     res.redirect(`${frontendUrl}?token=${token}&auth=success`);
   }
 );
