@@ -105,13 +105,12 @@ app.get('/api/auth/google/callback',
       JWT_SECRET
     );
     // Redirect to frontend with token
-    // Determine Frontend URL
+    // Determine Frontend URL based on host
+    const host = req.headers.host || '';
     let frontendUrl = 'https://reps-tau.vercel.app';
-
-    // TEMPORARILY DISABLED: Always use production URL to fix deployment issue
-    // if (!process.env.RAILWAY_ENVIRONMENT && !process.env.RAILWAY_PUBLIC_DOMAIN && process.env.NODE_ENV !== 'production') {
-    //    frontendUrl = 'http://localhost:3000';
-    // }
+    if (host.includes('localhost') || host.includes('127.0.0.1')) {
+      frontendUrl = 'http://localhost:3000';
+    }
 
     console.log(`[Auth Success] User: ${req.user.email} (${req.user.id})`);
     console.log(`[Auth Redirect] Target: ${frontendUrl}`);
@@ -134,13 +133,12 @@ app.get('/api/auth/discord/callback',
       JWT_SECRET
     );
     // Redirect to frontend with token
-    // Determine Frontend URL
+    // Determine Frontend URL based on host
+    const host = req.headers.host || '';
     let frontendUrl = 'https://reps-tau.vercel.app';
-
-    // TEMPORARILY DISABLED: Always use production URL to fix deployment issue
-    // if (!process.env.RAILWAY_ENVIRONMENT && !process.env.RAILWAY_PUBLIC_DOMAIN && process.env.NODE_ENV !== 'production') {
-    //    frontendUrl = 'http://localhost:3000';
-    // }
+    if (host.includes('localhost') || host.includes('127.0.0.1')) {
+      frontendUrl = 'http://localhost:3000';
+    }
 
     console.log(`[Auth Success] User: ${req.user.email} (${req.user.id})`);
     console.log(`[Auth Redirect] Target: ${frontendUrl}`);

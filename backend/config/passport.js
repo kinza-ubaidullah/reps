@@ -8,7 +8,9 @@ const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
 });
 
-const BACKEND_URL = process.env.BACKEND_URL || `http://localhost:${process.env.PORT || 3001}`;
+const BACKEND_URL = process.env.RAILWAY_PUBLIC_DOMAIN
+    ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`
+    : (process.env.BACKEND_URL || 'https://reps-production.up.railway.app');
 
 // Google OAuth Strategy
 passport.use(
