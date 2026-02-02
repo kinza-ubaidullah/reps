@@ -404,6 +404,12 @@ export const Home: React.FC = () => {
   const [latestProducts, setLatestProducts] = useState<Product[]>([]);
   const [loadingLatest, setLoadingLatest] = useState(true);
 
+  const formatImageUrl = (url: string) => {
+    if (!url) return '';
+    if (url.startsWith('//')) return `https:${url}`;
+    return url;
+  };
+
   useEffect(() => {
     const fetchLatest = async () => {
       try {
@@ -416,7 +422,7 @@ export const Home: React.FC = () => {
             id: String(item.itemId || item.id || Math.random()),
             title: item.title || 'Untitled Product',
             priceCNY: parseFloat(item.sku?.def?.price || item.price || 0),
-            image: item.image || item.imageUrl || '',
+            image: formatImageUrl(item.image || item.imageUrl || ''),
             platform: '1688' as const,
             sales: item.sales || 0,
             link: item.itemUrl || item.link || `https://detail.1688.com/offer/${item.itemId || item.id}.html`

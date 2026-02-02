@@ -23,6 +23,12 @@ import { searchProducts1688, getProductDetails1688 } from '../services/product16
 import { Product } from '../types';
 import { useWishlist } from '../context/WishlistContext';
 
+const formatImageUrl = (url: string) => {
+    if (!url) return '';
+    if (url.startsWith('//')) return `https:${url}`;
+    return url;
+};
+
 // Modal for advanced product details
 const ProductDetailModal = ({ product, onClose }: { product: Product, onClose: () => void }) => {
     const [details, setDetails] = useState<any>(null);
@@ -46,18 +52,18 @@ const ProductDetailModal = ({ product, onClose }: { product: Product, onClose: (
                 if (product.platform === '1688') {
                     const item = data.result?.item || data.item || {};
                     if (item.images && item.images.length > 0) {
-                        setActiveImg(item.images[0]);
+                        setActiveImg(formatImageUrl(item.images[0]));
                     } else {
-                        setActiveImg(product.image);
+                        setActiveImg(formatImageUrl(product.image));
                     }
                 } else {
                     const item = data.item || data.result || data;
                     if (item.item_imgs && item.item_imgs.length > 0) {
-                        setActiveImg(item.item_imgs[0].url);
+                        setActiveImg(formatImageUrl(item.item_imgs[0].url));
                     } else if (item.pic_url) {
-                        setActiveImg(item.pic_url);
+                        setActiveImg(formatImageUrl(item.pic_url));
                     } else {
-                        setActiveImg(product.image);
+                        setActiveImg(formatImageUrl(product.image));
                     }
                 }
             } catch (err: any) {
@@ -101,8 +107,8 @@ const ProductDetailModal = ({ product, onClose }: { product: Product, onClose: (
 
     // Normalize gallery
     const gallery = is1688
-        ? (item.images || []).map((url: string) => ({ url }))
-        : (item.item_imgs || []);
+        ? (item.images || []).map((url: string) => ({ url: formatImageUrl(url) }))
+        : (item.item_imgs || []).map((img: any) => ({ ...img, url: formatImageUrl(img.url) }));
 
     const price = is1688 ? (item.sku?.def?.price || product.priceCNY) : (item.price || product.priceCNY);
     const sales = is1688 ? (item.sales || product.sales) : (item.month_sales || product.sales);
@@ -244,7 +250,7 @@ export const Search: React.FC = () => {
                         id: String(item.itemId || item.id || Math.random()),
                         title: item.title || 'Untitled Product',
                         priceCNY: parseFloat(item.sku?.def?.price || item.price || 0),
-                        image: item.image || item.imageUrl || '',
+                        image: formatImageUrl(item.image || item.imageUrl || ''),
                         platform: '1688' as const,
                         sales: item.sales || 0,
                         link: item.itemUrl || item.link || `https://detail.1688.com/offer/${item.itemId || item.id}.html`
@@ -307,7 +313,7 @@ export const Search: React.FC = () => {
                         id: item.itemId || item.id || String(Math.random()),
                         title: item.title || 'Untitled Product',
                         priceCNY: parseFloat(item.price) || 0,
-                        image: item.imageUrl || item.image || '',
+                        image: formatImageUrl(item.imageUrl || item.image || ''),
                         platform: '1688' as const,
                         sales: item.sales || 0,
                         link: item.link || `https://detail.1688.com/offer/${item.itemId || item.id}.html`
