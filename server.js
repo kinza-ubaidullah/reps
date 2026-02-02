@@ -105,7 +105,12 @@ app.get('/api/auth/google/callback',
       JWT_SECRET
     );
     // Redirect to frontend with token
-    const frontendUrl = process.env.FRONTEND_URL || 'https://reps-tau.vercel.app';
+    // Redirect to frontend with token
+    let frontendUrl = process.env.FRONTEND_URL;
+    // Force production URL if env var is localhost but we are running on Railway (or if not set)
+    if (!frontendUrl || frontendUrl.includes('localhost')) {
+      frontendUrl = 'https://reps-tau.vercel.app';
+    }
     res.redirect(`${frontendUrl}?token=${token}&auth=success`);
   }
 );
@@ -124,7 +129,11 @@ app.get('/api/auth/discord/callback',
       JWT_SECRET
     );
     // Redirect to frontend with token
-    const frontendUrl = process.env.FRONTEND_URL || 'https://reps-tau.vercel.app';
+    // Redirect to frontend with token
+    let frontendUrl = process.env.FRONTEND_URL;
+    if (!frontendUrl || frontendUrl.includes('localhost')) {
+      frontendUrl = 'https://reps-tau.vercel.app';
+    }
     res.redirect(`${frontendUrl}?token=${token}&auth=success`);
   }
 );
