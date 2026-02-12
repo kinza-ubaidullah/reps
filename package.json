@@ -14,6 +14,7 @@
     "db:create": "node backend/database/createDb.js",
     "db:setup": "node backend/database/setup.js",
     "db:migrate:oauth": "node backend/database/migrate_oauth.js",
+    "db:seed:spreadsheets": "node seed_spreadsheets.js",
     "start": "npm run build && node server.js"
   },
   "dependencies": {
