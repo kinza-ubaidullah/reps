@@ -23,7 +23,6 @@ import {
   Gamepad2,
   Loader2
 } from 'lucide-react';
-import { CalculatorIcon, Logo } from '../components/Icons';
 
 // --- Components ---
 
@@ -171,7 +170,7 @@ const ToolsSection = () => {
   // Uses a 12-column grid system to create the Bento Box effect
   const tools = [
     // ROW 1: 3 Items (Equal Width)
-    { icon: CalculatorIcon, color: 'bg-blue-600', title: 'Shipping calculator', desc: 'Calculate shipping costs with real time rates', link: '/calculator', span: 'col-span-1 md:col-span-4' },
+    { icon: Calculator, color: 'bg-blue-600', title: 'Shipping calculator', desc: 'Calculate shipping costs with real time rates', link: '/calculator', span: 'col-span-1 md:col-span-4' },
     { icon: Sparkles, color: 'bg-red-600', title: 'Product Search', desc: 'Find products on taobao and weidian with ease', link: '/search', span: 'col-span-1 md:col-span-4' },
     { icon: LinkIcon, color: 'bg-emerald-500', title: 'Link converter', desc: 'Convert and get any product instantly', link: '/converter', span: 'col-span-1 md:col-span-4' },
 
@@ -346,55 +345,46 @@ const SupportedAgents = () => (
 const Footer = () => (
   <footer className="w-full bg-[#050505] pt-24 pb-12 border-t border-white/5">
     <div className="max-w-[1200px] mx-auto px-6 md:px-12">
-      <div className="flex flex-col md:flex-row justify-between gap-12 mb-16">
-        <div className="max-w-xs">
-          <Logo size={64} className="mb-6" />
-          <p className="text-[#666] text-sm leading-relaxed font-medium">
-            Clear stress free tools for your china tour. Track, convert, and discover all in one sleek workspace.
-          </p>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8">
+        {/* Product */}
+        <div className="flex flex-col gap-4">
+          <h3 className="font-bold text-white text-sm uppercase tracking-widest mb-2">PRODUCT</h3>
+          {['Home', 'Pricing', 'Careers', 'Changelog'].map(item => (
+            <Link key={item} to="#" className="text-[#666] hover:text-white text-sm font-medium transition-colors">{item}</Link>
+          ))}
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-12 md:gap-16">
 
-          {/* Product */}
-          <div className="flex flex-col gap-4">
-            <h3 className="font-bold text-white text-sm uppercase tracking-widest mb-2">PRODUCT</h3>
-            {['Home', 'Pricing', 'Careers', 'Changelog'].map(item => (
-              <Link key={item} to="#" className="text-[#666] hover:text-white text-sm font-medium transition-colors">{item}</Link>
-            ))}
-          </div>
+        {/* Company */}
+        <div className="flex flex-col gap-4">
+          <h3 className="font-bold text-white text-sm uppercase tracking-widest mb-2">COMPANY</h3>
+          {['Docs', 'Blog', '404', 'Waitlist'].map(item => (
+            <Link key={item} to="#" className="text-[#666] hover:text-white text-sm font-medium transition-colors">{item}</Link>
+          ))}
+        </div>
 
-          {/* Company */}
-          <div className="flex flex-col gap-4">
-            <h3 className="font-bold text-white text-sm uppercase tracking-widest mb-2">COMPANY</h3>
-            {['Docs', 'Blog', '404', 'Waitlist'].map(item => (
-              <Link key={item} to="#" className="text-[#666] hover:text-white text-sm font-medium transition-colors">{item}</Link>
-            ))}
-          </div>
+        {/* Resources */}
+        <div className="flex flex-col gap-4">
+          <h3 className="font-bold text-white text-sm uppercase tracking-widest mb-2">RESOURCES</h3>
+          {['Legal', 'Docs single', 'Blog single', 'Career single'].map(item => (
+            <Link key={item} to="#" className="text-[#666] hover:text-white text-sm font-medium transition-colors">{item}</Link>
+          ))}
+        </div>
 
-          {/* Resources */}
-          <div className="flex flex-col gap-4">
-            <h3 className="font-bold text-white text-sm uppercase tracking-widest mb-2">RESOURCES</h3>
-            {['Legal', 'Docs single', 'Blog single', 'Career single'].map(item => (
-              <Link key={item} to="#" className="text-[#666] hover:text-white text-sm font-medium transition-colors">{item}</Link>
-            ))}
-          </div>
-
-          {/* Social */}
-          <div className="flex flex-col gap-4">
-            <h3 className="font-bold text-white text-sm uppercase tracking-widest mb-2">SOCIAL</h3>
-            <a href="#" className="flex items-center gap-3 text-[#666] hover:text-white text-sm font-medium transition-colors">
-              <Github size={18} /> Github
-            </a>
-            <a href="#" className="flex items-center gap-3 text-[#666] hover:text-white text-sm font-medium transition-colors">
-              <Linkedin size={18} /> LinkedIn
-            </a>
-            <a href="#" className="flex items-center gap-3 text-[#666] hover:text-white text-sm font-medium transition-colors">
-              <Twitter size={18} /> Twitter/ X
-            </a>
-            <a href="#" className="flex items-center gap-3 text-[#666] hover:text-white text-sm font-medium transition-colors">
-              <Gamepad2 size={18} /> Discord
-            </a>
-          </div>
+        {/* Social */}
+        <div className="flex flex-col gap-4">
+          <h3 className="font-bold text-white text-sm uppercase tracking-widest mb-2">SOCIAL</h3>
+          <a href="#" className="flex items-center gap-3 text-[#666] hover:text-white text-sm font-medium transition-colors">
+            <Github size={18} /> Github
+          </a>
+          <a href="#" className="flex items-center gap-3 text-[#666] hover:text-white text-sm font-medium transition-colors">
+            <Linkedin size={18} /> LinkedIn
+          </a>
+          <a href="#" className="flex items-center gap-3 text-[#666] hover:text-white text-sm font-medium transition-colors">
+            <Twitter size={18} /> Twitter/ X
+          </a>
+          <a href="#" className="flex items-center gap-3 text-[#666] hover:text-white text-sm font-medium transition-colors">
+            <Gamepad2 size={18} /> Discord
+          </a>
         </div>
       </div>
 
@@ -507,7 +497,11 @@ export const Home: React.FC = () => {
         {/* Snake Image */}
         <div className="relative h-[500px] lg:h-[700px] flex items-center justify-center order-1 lg:order-2 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
           <div className="relative z-10 w-full h-full flex items-center justify-center p-4">
-            <Logo size={400} className="drop-shadow-[0_0_80px_rgba(21,128,61,0.3)] animate-float" />
+            <img
+              src="https://i.pinimg.com/originals/bc/eb/c0/bcebc0cd047847abbe15a92ae801bff8.png"
+              alt="AnyReps Snake Visual"
+              className="w-auto h-auto max-w-full max-h-full object-contain drop-shadow-[0_0_50px_rgba(21,128,61,0.2)]"
+            />
           </div>
           {/* Glow */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-primary/10 blur-[120px] rounded-full z-0 opacity-50"></div>

@@ -4,8 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { COUNTRIES } from '../constants';
 import { calculateShipping, ShippingResult } from '../services/shippingService';
 import { getUserLocation } from '../services/ipService';
-import { Package, ArrowRight, ArrowLeft, Loader2, AlertCircle, MapPin } from 'lucide-react';
-import { CalculatorIcon } from '../components/Icons';
+import { Package, ArrowRight, ArrowLeft, Calculator, Loader2, AlertCircle, MapPin } from 'lucide-react';
 
 export const ShippingCalculator: React.FC = () => {
     const navigate = useNavigate();
@@ -79,7 +78,7 @@ export const ShippingCalculator: React.FC = () => {
                 </button>
 
                 <div className="flex items-center gap-3">
-                    <CalculatorIcon size={28} />
+                    <Calculator size={28} className="text-primary" />
                     <h1 className="text-xl md:text-2xl font-bold text-white">Shipping Calculator</h1>
                 </div>
             </div>

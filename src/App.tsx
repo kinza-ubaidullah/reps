@@ -115,13 +115,14 @@ const App: React.FC = () => {
 
   // DELAYED LOGIN POPUP
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!user && !api.isLoggedIn()) {
+    // Only start timer if app is ready and not loading session
+    if (appReady && !sessionLoading && !user && !api.isLoggedIn()) {
+      const timer = setTimeout(() => {
         setIsAuthOpen(true);
-      }
-    }, 10000); // 10 seconds delay as requested
-    return () => clearTimeout(timer);
-  }, [user]);
+      }, 10000); // 10 seconds delay after loader screen
+      return () => clearTimeout(timer);
+    }
+  }, [user, appReady, sessionLoading]);
 
   const handleLogout = () => {
     api.logout();
