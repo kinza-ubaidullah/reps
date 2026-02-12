@@ -346,7 +346,7 @@ const Footer = () => (
   <footer className="w-full bg-[#050505] pt-24 pb-12 border-t border-white/5">
     <div className="max-w-[1200px] mx-auto px-6 md:px-12">
       <div className="flex flex-col items-center mb-16">
-        <img src="/assets/images/logo.png" alt="AnyReps Logo" className="w-16 h-16 object-contain mb-4" />
+        <img src="/assets/imgs/logo.png" alt="AnyReps Logo" className="w-16 h-16 object-contain mb-4" />
         <h2 className="text-2xl font-bold text-white tracking-widest">ANY<span className="text-primary">REPS</span></h2>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8">
@@ -482,7 +482,7 @@ export const Home: React.FC = () => {
         {/* Text Content */}
         <div className="space-y-8 relative z-10 order-2 lg:order-1 pt-8 lg:pt-0">
           <div className="flex items-center gap-6 animate-fade-in-up">
-            <img src="/assets/images/logo.png" alt="Logo" className="w-16 h-16 md:w-20 md:h-20 object-contain shadow-2xl shadow-primary/20" />
+            <img src="/assets/imgs/logo.png" alt="Logo" className="w-16 h-16 md:w-20 md:h-20 object-contain shadow-2xl shadow-primary/20" />
             <h1 className="text-6xl md:text-8xl font-bold tracking-tight text-white leading-[1.1]">
               Any <span className="text-primary">Reps</span>
             </h1>

@@ -63,7 +63,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLogin, isForced
         )}
         <div className="p-8">
           <div className="text-center mb-8">
-            <img src="/assets/images/logo.png" alt="AnyReps Logo" className="w-16 h-16 object-contain mx-auto mb-4" />
+            <img src="/assets/imgs/logo.png" alt="AnyReps Logo" className="w-16 h-16 object-contain mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-white mb-2">{isLogin ? 'Welcome Back' : 'Create Account'}</h2>
             <p className="text-[#666] text-sm font-bold uppercase tracking-widest">AnyReps Authentication</p>
           </div>

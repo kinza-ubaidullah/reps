@@ -23,7 +23,7 @@ export const Wishlist: React.FC = () => {
                 </button>
 
                 <div className="flex items-center gap-3">
-                    <img src="/assets/images/img1.png" alt="Wishlist" className="w-8 h-8 object-contain" />
+                    <img src="/assets/imgs/img1.png" alt="Wishlist" className="w-8 h-8 object-contain" />
                     <h1 className="text-xl md:text-2xl font-bold text-white flex items-center gap-3">
                         My Wishlist
                         <span className="text-sm font-bold text-black bg-primary px-2 py-0.5 rounded-md">{items.length}</span>

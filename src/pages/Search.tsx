@@ -359,7 +359,7 @@ export const Search: React.FC<{ user: User | null }> = ({ user }) => {
                     <ArrowLeft size={24} />
                 </button>
                 <div className="flex items-center gap-3">
-                    <img src="/assets/images/img.png" alt="Product Search" className="w-8 h-8 object-contain" />
+                    <img src="/assets/imgs/img.png" alt="Product Search" className="w-8 h-8 object-contain" />
                     <h1 className="text-xl md:text-2xl font-bold text-white">Product Search</h1>
                 </div>
             </div>

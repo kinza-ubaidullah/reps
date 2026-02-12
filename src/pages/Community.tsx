@@ -380,7 +380,7 @@ export const Community: React.FC<{ user: User | null }> = ({ user }) => {
                 </button>
 
                 <div className="flex items-center gap-3">
-                    <img src="/assets/images/img.png" alt="Community Hub" className="w-8 h-8 object-contain" />
+                    <img src="/assets/imgs/img.png" alt="Community Hub" className="w-8 h-8 object-contain" />
                     <h1 className="text-xl md:text-2xl font-bold text-white">Community Hub</h1>
                 </div>
             </div>
@@ -392,19 +392,19 @@ export const Community: React.FC<{ user: User | null }> = ({ user }) => {
                         to="/community/hot"
                         className={({ isActive }) => `px-6 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-2 ${isActive ? 'bg-[#222] text-white shadow-lg' : 'text-[#666] hover:text-white'}`}
                     >
-                        <img src="/assets/images/hot.png" alt="Hot" className="w-4 h-4 object-contain" /> Hot Selling
+                        <img src="/assets/imgs/hot.png" alt="Hot" className="w-4 h-4 object-contain" /> Hot Selling
                     </NavLink>
                     <NavLink
                         to="/community/w2c"
                         className={({ isActive }) => `px-6 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-2 ${isActive ? 'bg-[#222] text-white shadow-lg' : 'text-[#666] hover:text-white'}`}
                     >
-                        <img src="/assets/images/img-gallery.png" alt="Gallery" className="w-4 h-4 object-contain" /> W2C Gallery
+                        <img src="/assets/imgs/img-gallery.png" alt="Gallery" className="w-4 h-4 object-contain" /> W2C Gallery
                     </NavLink>
                     <NavLink
                         to="/community/sheets"
                         className={({ isActive }) => `px-6 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-2 ${isActive ? 'bg-[#222] text-white shadow-lg' : 'text-[#666] hover:text-white'}`}
                     >
-                        <img src="/assets/images/spread.png" alt="Spreadsheets" className="w-4 h-4 object-contain" /> Spreadsheets
+                        <img src="/assets/imgs/spread.png" alt="Spreadsheets" className="w-4 h-4 object-contain" /> Spreadsheets
                     </NavLink>
                 </div>
 

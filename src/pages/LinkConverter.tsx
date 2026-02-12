@@ -191,7 +191,7 @@ export const LinkConverter: React.FC = () => {
                 </button>
 
                 <div className="flex items-center gap-3">
-                    <img src="/assets/images/link.png" alt="Link Converter" className="w-8 h-8 object-contain" />
+                    <img src="/assets/imgs/link.png" alt="Link Converter" className="w-8 h-8 object-contain" />
                     <h1 className="text-xl md:text-2xl font-bold text-white">Link Converter</h1>
                 </div>
             </div>

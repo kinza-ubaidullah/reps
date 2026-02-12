@@ -114,7 +114,7 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onLoginClick, onLogout }) 
           </button>
 
           <Link to="/" onClick={() => window.scrollTo(0, 0)} className="flex items-center gap-4 group">
-            <img src="/assets/images/logo.png" alt="AnyReps Logo" className="w-12 h-12 object-contain" />
+            <img src="/assets/imgs/logo.png" alt="AnyReps Logo" className="w-12 h-12 object-contain" />
           </Link>
         </div>
 
@@ -175,7 +175,7 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onLoginClick, onLogout }) 
               <button onClick={() => setIsMobileMenuOpen(false)} className="text-white hover:text-gray-300 transition-colors">
                 <X size={32} />
               </button>
-              <img src="/assets/images/logo.png" alt="AnyReps Logo" className="w-10 h-10 object-contain" />
+              <img src="/assets/imgs/logo.png" alt="AnyReps Logo" className="w-10 h-10 object-contain" />
             </div>
 
             {/* Mobile Profile Avatar */}

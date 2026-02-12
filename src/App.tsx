@@ -33,7 +33,7 @@ const ScrollToTop = () => {
 const Preloader = () => (
   <div className="fixed inset-0 z-[100] bg-[#050505] flex flex-col items-center justify-center">
     <div className="relative">
-      <img src="/assets/images/logo.png" alt="AnyReps Loader" className="w-20 h-20 object-contain animate-pulse" />
+      <img src="/assets/imgs/logo.png" alt="AnyReps Loader" className="w-20 h-20 object-contain animate-pulse" />
       <div className="absolute -inset-8 border-2 border-primary/20 rounded-full"></div>
       <div className="absolute -inset-8 border-t-2 border-primary rounded-full animate-spin"></div>
     </div>
