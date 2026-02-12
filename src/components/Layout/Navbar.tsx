@@ -1,8 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, User as UserIcon, X, Shield, LogOut } from 'lucide-react';
+import { Menu, User as UserIcon, X, LogOut } from 'lucide-react';
 import { User, Rank } from '../../types';
+import { Logo } from '../Icons';
 
 interface NavbarProps {
   user: User | null;
@@ -114,10 +115,7 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onLoginClick, onLogout }) 
           </button>
 
           <Link to="/" onClick={() => window.scrollTo(0, 0)} className="flex items-center gap-4 group">
-            {/* Logo Placeholder - WAITING FOR ASSET */}
-            <div className="w-12 h-12 relative flex items-center justify-center bg-transparent border border-dashed border-white/30 rounded-full">
-              <span className="text-[8px] font-bold text-white/50">LOGO</span>
-            </div>
+            <Logo size={44} className="group-hover:scale-110 transition-transform duration-500 drop-shadow-xl" />
           </Link>
         </div>
 
@@ -178,10 +176,7 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onLoginClick, onLogout }) 
               <button onClick={() => setIsMobileMenuOpen(false)} className="text-white hover:text-gray-300 transition-colors">
                 <X size={32} />
               </button>
-              {/* Logo Copy - Placeholder */}
-              <div className="w-10 h-10 relative flex items-center justify-center bg-transparent border border-dashed border-white/30 rounded-full">
-                <span className="text-[8px] font-bold text-white/50">LOGO</span>
-              </div>
+              <Logo size={36} />
             </div>
 
             {/* Mobile Profile Avatar */}
