@@ -88,9 +88,10 @@ const isAdmin = (req, res, next) => {
 // --- AUTH ROUTES ---
 
 // Google OAuth Routes
-app.get('/api/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
-);
+app.get('/api/auth/google', (req, res, next) => {
+  console.log('📡 [Passport] Initiating Google Auth...');
+  passport.authenticate('google', { scope: ['profile', 'email'] })(req, res, next);
+});
 
 app.get('/api/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),

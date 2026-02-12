@@ -105,13 +105,23 @@ const App: React.FC = () => {
           setIsAuthOpen(true);
         }
       } else {
-        setIsAuthOpen(true);
+        setIsAuthOpen(false); // Do not force open immediately
       }
       setSessionLoading(false);
     };
 
     initAuth();
   }, []);
+
+  // DELAYED LOGIN POPUP
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!user && !api.isLoggedIn()) {
+        setIsAuthOpen(true);
+      }
+    }, 5000); // 5 seconds delay per latest instruction
+    return () => clearTimeout(timer);
+  }, [user]);
 
   const handleLogout = () => {
     api.logout();
@@ -143,7 +153,7 @@ const App: React.FC = () => {
     <WishlistProvider>
       <div className="flex h-screen w-full overflow-hidden bg-[#050505] text-white font-sans">
         <ScrollToTop />
-        <div className={`flex-1 flex flex-col h-full overflow-hidden relative transition-all duration-700 ${!user ? 'blur-2xl scale-110' : 'blur-0 scale-100'}`}>
+        <div className="flex-1 flex flex-col h-full overflow-hidden relative bg-[#050505]">
           <Navbar user={user} onLoginClick={() => setIsAuthOpen(true)} onLogout={handleLogout} />
           <main className="flex-1 overflow-y-auto scroll-smooth relative no-scrollbar bg-[#050505]">
             <Routes>
@@ -154,11 +164,11 @@ const App: React.FC = () => {
               <Route path="/search" element={<Search />} />
               <Route path="/tracking" element={<Tracking />} />
               <Route path="/qc" element={<QCPhotos />} />
-              <Route path="/community/*" element={<Community />} />
+              <Route path="/community/*" element={<Community user={user} />} />
               <Route path="/sellers" element={<Sellers />} />
               <Route path="/profile" element={user ? <Profile user={user} /> : <Navigate to="/" />} />
               <Route path="/wishlist" element={<Wishlist />} />
-              <Route path="/admin" element={<Admin />} />
+              <Route path="/admin" element={user?.rank === Rank.ADMIN ? <Admin /> : <Navigate to="/" replace />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>

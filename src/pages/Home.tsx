@@ -460,10 +460,20 @@ export const Home: React.FC = () => {
   }, [location]);
 
   return (
-    <div className="min-h-screen bg-[#050505] pt-32 pb-0">
+    <div className="min-h-screen bg-[#050505] pt-32 pb-0 relative overflow-hidden">
+      {/* Background Gradients & Glows */}
+      <div className="absolute top-0 left-0 w-full h-[1000px] bg-gradient-to-b from-primary/10 via-[#050505] to-[#050505] pointer-events-none z-0" />
+
+      {/* Dynamic Glow Orbs */}
+      <div className="absolute top-[10%] left-[5%] w-[400px] h-[400px] bg-primary/20 blur-[120px] rounded-full pointer-events-none z-0 animate-pulse" />
+      <div className="absolute top-[30%] right-[5%] w-[500px] h-[500px] bg-emerald-500/10 blur-[150px] rounded-full pointer-events-none z-0" />
+      <div className="absolute bottom-[20%] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-purple-900/10 blur-[150px] rounded-full pointer-events-none z-0" />
+
+      {/* Pattern Overlay */}
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03] pointer-events-none z-0" />
 
       {/* HERO SECTION */}
-      <div id="hero-section" className="max-w-[1400px] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-8 relative">
+      <div id="hero-section" className="max-w-[1400px] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-8 relative z-10">
 
         {/* Text Content */}
         <div className="space-y-8 relative z-10 order-2 lg:order-1 pt-8 lg:pt-0">

@@ -5,7 +5,7 @@ import { ArrowLeft, Plus, Flame, Search, FileSpreadsheet, Ghost, Users, Loader2,
 import { searchTaobaoProducts } from '../services/taobaoService';
 import { searchProducts1688 } from '../services/product1688Service';
 import { fetchSpreadsheets } from '../services/spreadsheetService';
-import { Product, Spreadsheet } from '../types';
+import { Product, Spreadsheet, User, Rank } from '../types';
 
 // Reusable Empty State Component
 const EmptyState = ({ icon: Icon, title, desc }: { icon: any, title: string, desc: string }) => (
@@ -119,7 +119,7 @@ const HotSelling = () => {
     );
 };
 
-const W2C = () => {
+const W2C = ({ user }: { user: User | null }) => {
     const navigate = useNavigate();
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
@@ -178,9 +178,6 @@ const W2C = () => {
                         </button>
                     ))}
                 </div>
-                <button className="px-5 py-2 bg-primary hover:bg-primaryHover text-black text-sm font-bold rounded-xl flex items-center gap-2 transition-colors whitespace-nowrap shadow-lg shadow-primary/20">
-                    <Plus size={16} /> Post Find
-                </button>
             </div>
 
             {error && (
@@ -188,58 +185,61 @@ const W2C = () => {
                     <AlertCircle size={18} />
                     <span className="text-sm font-bold">{error}</span>
                 </div>
-            )}
+            )
+            }
 
-            {loading ? (
-                <div className="py-20 flex flex-col items-center justify-center">
-                    <Loader2 size={32} className="animate-spin text-primary mb-4" />
-                    <p className="text-[#666] font-medium">Fetching latest finds...</p>
-                </div>
-            ) : products.length > 0 ? (
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 animate-fade-in-up">
-                    {products.map((p) => (
-                        <div key={p.id} className="bg-[#111] border border-white/5 rounded-2xl overflow-hidden hover:border-white/20 transition-all group hover:-translate-y-1 relative">
-                            <div className="relative overflow-hidden aspect-[4/3] bg-[#0A0A0A]">
-                                {p.image ? (
-                                    <img src={p.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="" />
-                                ) : (
-                                    <div className="w-full h-full flex items-center justify-center text-[#333]">No Image</div>
-                                )}
-                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2">
-                                    <button
-                                        onClick={() => navigate('/qc', { state: { directUrl: p.link } })}
-                                        className="bg-primary text-black text-[10px] font-bold px-3 py-1.5 rounded-lg transform translate-y-2 group-hover:translate-y-0 transition-transform flex items-center gap-1 shadow-lg"
-                                    >
-                                        <Camera size={12} /> View QC
-                                    </button>
-                                    <a
-                                        href={p.link}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        className="bg-white text-black text-[10px] font-bold px-3 py-1.5 rounded-lg transform translate-y-2 group-hover:translate-y-0 transition-transform flex items-center gap-1 shadow-lg"
-                                    >
-                                        <ExternalLink size={12} /> Link
-                                    </a>
+            {
+                loading ? (
+                    <div className="py-20 flex flex-col items-center justify-center">
+                        <Loader2 size={32} className="animate-spin text-primary mb-4" />
+                        <p className="text-[#666] font-medium">Fetching latest finds...</p>
+                    </div>
+                ) : products.length > 0 ? (
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 animate-fade-in-up">
+                        {products.map((p) => (
+                            <div key={p.id} className="bg-[#111] border border-white/5 rounded-2xl overflow-hidden hover:border-white/20 transition-all group hover:-translate-y-1 relative">
+                                <div className="relative overflow-hidden aspect-[4/3] bg-[#0A0A0A]">
+                                    {p.image ? (
+                                        <img src={p.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="" />
+                                    ) : (
+                                        <div className="w-full h-full flex items-center justify-center text-[#333]">No Image</div>
+                                    )}
+                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2">
+                                        <button
+                                            onClick={() => navigate('/qc', { state: { directUrl: p.link } })}
+                                            className="bg-primary text-black text-[10px] font-bold px-3 py-1.5 rounded-lg transform translate-y-2 group-hover:translate-y-0 transition-transform flex items-center gap-1 shadow-lg"
+                                        >
+                                            <Camera size={12} /> View QC
+                                        </button>
+                                        <a
+                                            href={p.link}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="bg-white text-black text-[10px] font-bold px-3 py-1.5 rounded-lg transform translate-y-2 group-hover:translate-y-0 transition-transform flex items-center gap-1 shadow-lg"
+                                        >
+                                            <ExternalLink size={12} /> Link
+                                        </a>
+                                    </div>
+                                </div>
+                                <div className="p-4">
+                                    <h3 className="text-white text-sm font-bold truncate mb-1" title={p.title}>{p.title}</h3>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-[#888] text-[10px] font-bold uppercase tracking-wider">{p.platform}</span>
+                                        <span className="text-primary font-bold">¥{p.priceCNY}</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="p-4">
-                                <h3 className="text-white text-sm font-bold truncate mb-1" title={p.title}>{p.title}</h3>
-                                <div className="flex justify-between items-center">
-                                    <span className="text-[#888] text-[10px] font-bold uppercase tracking-wider">{p.platform}</span>
-                                    <span className="text-primary font-bold">¥{p.priceCNY}</span>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            ) : (
-                <EmptyState
-                    icon={ShoppingBag}
-                    title="No Finds Yet"
-                    desc={`No results found for ${activeCategory}. Try another category.`}
-                />
-            )}
-        </div>
+                        ))}
+                    </div>
+                ) : (
+                    <EmptyState
+                        icon={ShoppingBag}
+                        title="No Finds Yet"
+                        desc={`No results found for ${activeCategory}. Try another category.`}
+                    />
+                )
+            }
+        </div >
     );
 };
 
@@ -329,7 +329,7 @@ const Spreadsheets = () => {
     );
 };
 
-export const Community: React.FC = () => {
+export const Community: React.FC<{ user: User | null }> = ({ user }) => {
     const navigate = useNavigate();
 
     const handleBack = () => {
@@ -379,7 +379,7 @@ export const Community: React.FC = () => {
                 <Routes>
                     <Route path="/" element={<Navigate to="hot" replace />} />
                     <Route path="hot" element={<HotSelling />} />
-                    <Route path="w2c" element={<W2C />} />
+                    <Route path="w2c" element={<W2C user={user} />} />
                     <Route path="sheets" element={<Spreadsheets />} />
                 </Routes>
             </div>

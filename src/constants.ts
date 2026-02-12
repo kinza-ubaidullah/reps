@@ -3,10 +3,38 @@ import { Agent, Rank, Product } from './types';
 
 export const MOCK_AGENTS: Agent[] = [
   {
+    id: 'agent_litbuy',
+    name: 'LitBuy',
+    website: 'https://www.litbuy.com',
+    logo: 'https://placehold.co/100x100/8b5cf6/white?text=LB', // REPLACE WITH REAL LOGO
+    shippingLines: [
+      {
+        name: 'DHL Tariffless (Fast & Cheap)',
+        minWeight: 0,
+        maxWeight: 10000,
+        basePrice: 15, // Cheapest base price
+        pricePer500g: 6, // Cheapest rate
+        deliveryDaysMin: 6,
+        deliveryDaysMax: 12,
+        features: ['Tax Free', 'Triangle Shipping', 'Lowest Price']
+      },
+      {
+        name: 'DHL Tax Free Premium',
+        minWeight: 0,
+        maxWeight: 20000,
+        basePrice: 20,
+        pricePer500g: 6.5,
+        deliveryDaysMin: 8,
+        deliveryDaysMax: 14,
+        features: ['Insurance Included', 'Safe']
+      }
+    ]
+  },
+  {
     id: 'agent_cnfans',
     name: 'CNFans',
     website: 'https://cnfans.com',
-    logo: 'https://placehold.co/100x100/10b981/white?text=CN',
+    logo: 'https://placehold.co/100x100/10b981/white?text=CN', // REPLACE WITH REAL LOGO
     shippingLines: [
       {
         name: 'DHL Tariffless',
@@ -34,7 +62,7 @@ export const MOCK_AGENTS: Agent[] = [
     id: 'agent_mulebuy',
     name: 'Mulebuy',
     website: 'https://mulebuy.com',
-    logo: 'https://placehold.co/100x100/ea580c/white?text=MB',
+    logo: 'https://placehold.co/100x100/ea580c/white?text=MB', // REPLACE WITH REAL LOGO
     shippingLines: [
       {
         name: 'Mule Express',
@@ -62,7 +90,7 @@ export const MOCK_AGENTS: Agent[] = [
     id: 'agent_kakobuy',
     name: 'KakoBuy',
     website: 'https://kakobuy.com',
-    logo: 'https://placehold.co/100x100/dc2626/white?text=KB',
+    logo: 'https://placehold.co/100x100/dc2626/white?text=KB', // REPLACE WITH REAL LOGO
     shippingLines: [
       {
         name: 'Kako Special Line',
@@ -77,38 +105,10 @@ export const MOCK_AGENTS: Agent[] = [
     ]
   },
   {
-    id: 'agent_litbuy',
-    name: 'LitBuy',
-    website: 'https://www.litbuy.com',
-    logo: 'https://placehold.co/100x100/8b5cf6/white?text=LB',
-    shippingLines: [
-      {
-        name: 'Lit Express',
-        minWeight: 0,
-        maxWeight: 5000,
-        basePrice: 19,
-        pricePer500g: 7,
-        deliveryDaysMin: 8,
-        deliveryDaysMax: 15,
-        features: ['Priority']
-      },
-      {
-        name: 'Lit Tax Free',
-        minWeight: 0,
-        maxWeight: 10000,
-        basePrice: 24,
-        pricePer500g: 7.8,
-        deliveryDaysMin: 12,
-        deliveryDaysMax: 20,
-        features: ['Tax Free']
-      }
-    ]
-  },
-  {
     id: 'agent_sugargoo',
     name: 'SUGARGOO',
     website: 'https://sugargoo.com',
-    logo: 'https://placehold.co/100x100/52525b/white?text=SG',
+    logo: 'https://placehold.co/100x100/52525b/white?text=SG', // REPLACE WITH REAL LOGO
     shippingLines: [
       {
         name: 'US Tax Free',
@@ -136,7 +136,7 @@ export const MOCK_AGENTS: Agent[] = [
     id: 'agent_joyagoo',
     name: 'JoyaGoo',
     website: 'https://joyagoo.com',
-    logo: 'https://placehold.co/100x100/eab308/white?text=JG',
+    logo: 'https://placehold.co/100x100/eab308/white?text=JG', // REPLACE WITH REAL LOGO
     shippingLines: [
       {
         name: 'Joya Air',

@@ -32,7 +32,7 @@ export const calculateShipping = async (req: ShippingRequest): Promise<ShippingR
   await new Promise(resolve => setTimeout(resolve, 600));
 
   const results: ShippingResult[] = [];
-  
+
   // Calculate Volumetric Weight
   let volWeight = 0;
   if (req.length && req.width && req.height) {
@@ -53,10 +53,10 @@ export const calculateShipping = async (req: ShippingRequest): Promise<ShippingR
 
       // Simple logic: If line name includes 'DHL' or 'FedEx' or 'UPS', use Volumetric
       if (line.name.toLowerCase().includes('dhl') || line.name.toLowerCase().includes('express') || line.name.toLowerCase().includes('fedex')) {
-          if (volWeight > req.weight) {
-              chargedWeight = volWeight;
-              isVolumetric = true;
-          }
+        if (volWeight > req.weight) {
+          chargedWeight = volWeight;
+          isVolumetric = true;
+        }
       }
 
       // 3. Check Weight again against max (in case volume pushes it over)
@@ -68,7 +68,7 @@ export const calculateShipping = async (req: ShippingRequest): Promise<ShippingR
       let price = line.basePrice;
       const remainingWeight = Math.max(0, chargedWeight - 500);
       const additionalUnits = Math.ceil(remainingWeight / 500);
-      
+
       price += additionalUnits * line.pricePer500g;
 
       results.push({
@@ -87,6 +87,10 @@ export const calculateShipping = async (req: ShippingRequest): Promise<ShippingR
     });
   });
 
-  // Sort by Price (Cheapest first)
-  return results.sort((a, b) => a.totalPrice - b.totalPrice);
+  // Sort by LitBuy first, then by Price (Cheapest first)
+  return results.sort((a, b) => {
+    if (a.agentName === 'LitBuy' && b.agentName !== 'LitBuy') return -1;
+    if (a.agentName !== 'LitBuy' && b.agentName === 'LitBuy') return 1;
+    return a.totalPrice - b.totalPrice;
+  });
 };

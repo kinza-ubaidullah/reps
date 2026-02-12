@@ -114,18 +114,9 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onLoginClick, onLogout }) 
           </button>
 
           <Link to="/" onClick={() => window.scrollTo(0, 0)} className="flex items-center gap-4 group">
-            {/* Logo Graphic */}
-            <div className="w-12 h-12 relative flex items-center justify-center">
-              <svg width="48" height="48" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="group-hover:scale-105 transition-transform">
-                <path d="M20 28H80" stroke="#B91C1C" strokeWidth="8" strokeLinecap="round" />
-                <path d="M35 28L25 85" stroke="#B91C1C" strokeWidth="8" strokeLinecap="round" />
-                <path d="M65 28L75 85" stroke="#B91C1C" strokeWidth="8" strokeLinecap="round" />
-                <path d="M30 55H70" stroke="#B91C1C" strokeWidth="8" strokeLinecap="round" />
-                <path d="M72 18C78 18 82 22 78 30C74 38 65 42 50 42" stroke="#15803D" strokeWidth="6" strokeLinecap="round" />
-                <path d="M50 42C35 42 22 46 22 56C22 66 32 72 50 72" stroke="#15803D" strokeWidth="6" strokeLinecap="round" />
-                <path d="M50 72C68 72 74 82 70 92" stroke="#15803D" strokeWidth="6" strokeLinecap="round" />
-                <circle cx="75" cy="20" r="2" fill="#EAB308" />
-              </svg>
+            {/* Logo Placeholder - WAITING FOR ASSET */}
+            <div className="w-12 h-12 relative flex items-center justify-center bg-transparent border border-dashed border-white/30 rounded-full">
+              <span className="text-[8px] font-bold text-white/50">LOGO</span>
             </div>
           </Link>
         </div>
@@ -149,12 +140,7 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onLoginClick, onLogout }) 
         {/* Right Side - Login/Profile/Logout */}
         <div className="flex items-center gap-4 z-50">
           {/* Admin Access Button (Desktop) */}
-          {/* Temporary: Show Admin button for everyone for testing */}
-          {true && (
-            <Link to="/admin" className="flex items-center gap-2 px-3 py-2 bg-red-500/10 text-red-500 border border-red-500/20 rounded-full text-xs font-bold hover:bg-red-500 hover:text-white transition-colors">
-              <Shield size={16} /> <span className="hidden md:inline">Admin</span>
-            </Link>
-          )}
+
 
           {user ? (
             <div className="flex items-center gap-3">
@@ -192,18 +178,9 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onLoginClick, onLogout }) 
               <button onClick={() => setIsMobileMenuOpen(false)} className="text-white hover:text-gray-300 transition-colors">
                 <X size={32} />
               </button>
-              {/* Logo Copy */}
-              <div className="w-10 h-10 relative flex items-center justify-center">
-                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M20 28H80" stroke="#B91C1C" strokeWidth="8" strokeLinecap="round" />
-                  <path d="M35 28L25 85" stroke="#B91C1C" strokeWidth="8" strokeLinecap="round" />
-                  <path d="M65 28L75 85" stroke="#B91C1C" strokeWidth="8" strokeLinecap="round" />
-                  <path d="M30 55H70" stroke="#B91C1C" strokeWidth="8" strokeLinecap="round" />
-                  <path d="M72 18C78 18 82 22 78 30C74 38 65 42 50 42" stroke="#15803D" strokeWidth="6" strokeLinecap="round" />
-                  <path d="M50 42C35 42 22 46 22 56C22 66 32 72 50 72" stroke="#15803D" strokeWidth="6" strokeLinecap="round" />
-                  <path d="M50 72C68 72 74 82 70 92" stroke="#15803D" strokeWidth="6" strokeLinecap="round" />
-                  <circle cx="75" cy="20" r="2" fill="#EAB308" />
-                </svg>
+              {/* Logo Copy - Placeholder */}
+              <div className="w-10 h-10 relative flex items-center justify-center bg-transparent border border-dashed border-white/30 rounded-full">
+                <span className="text-[8px] font-bold text-white/50">LOGO</span>
               </div>
             </div>
 
@@ -233,11 +210,7 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onLoginClick, onLogout }) 
           <div className="pb-16 flex flex-col items-center gap-6 text-[#666] font-medium">
             <Link to="/profile" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">My Profile</Link>
             <Link to="/wishlist" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition-colors">Wishlist</Link>
-            {true && (
-              <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)} className="text-red-500 font-bold flex items-center gap-2">
-                <Shield size={16} /> Admin Panel
-              </Link>
-            )}
+
             {user && (
               <button onClick={() => { onLogout(); setIsMobileMenuOpen(false); }} className="text-red-500 font-bold flex items-center gap-2 mt-2">
                 <LogOut size={16} /> Logout
