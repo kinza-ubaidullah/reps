@@ -114,10 +114,7 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onLoginClick, onLogout }) 
           </button>
 
           <Link to="/" onClick={() => window.scrollTo(0, 0)} className="flex items-center gap-4 group">
-            {/* Logo Placeholder - WAITING FOR ASSET */}
-            <div className="w-12 h-12 relative flex items-center justify-center bg-transparent border border-dashed border-white/30 rounded-full">
-              <span className="text-[8px] font-bold text-white/50">LOGO</span>
-            </div>
+            <img src="/assets/images/logo.png" alt="AnyReps Logo" className="w-12 h-12 object-contain" />
           </Link>
         </div>
 
@@ -178,10 +175,7 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onLoginClick, onLogout }) 
               <button onClick={() => setIsMobileMenuOpen(false)} className="text-white hover:text-gray-300 transition-colors">
                 <X size={32} />
               </button>
-              {/* Logo Copy - Placeholder */}
-              <div className="w-10 h-10 relative flex items-center justify-center bg-transparent border border-dashed border-white/30 rounded-full">
-                <span className="text-[8px] font-bold text-white/50">LOGO</span>
-              </div>
+              <img src="/assets/images/logo.png" alt="AnyReps Logo" className="w-10 h-10 object-contain" />
             </div>
 
             {/* Mobile Profile Avatar */}

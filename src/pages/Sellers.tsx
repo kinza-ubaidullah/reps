@@ -71,7 +71,7 @@ export const Sellers: React.FC<{ user: User | null }> = ({ user }) => {
                 </button>
 
                 <div className="flex items-center gap-3">
-                    <ShieldCheck size={28} className="text-primary" />
+                    <img src="/assets/images/top.png" alt="Trusted Sellers" className="w-8 h-8 object-contain" />
                     <h1 className="text-xl md:text-2xl font-bold text-white">Trusted Sellers</h1>
                 </div>
 

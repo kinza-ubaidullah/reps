@@ -33,16 +33,7 @@ const ScrollToTop = () => {
 const Preloader = () => (
   <div className="fixed inset-0 z-[100] bg-[#050505] flex flex-col items-center justify-center">
     <div className="relative">
-      <svg width="80" height="80" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="animate-pulse">
-        <path d="M20 28H80" stroke="#D98E04" strokeWidth="8" strokeLinecap="round" />
-        <path d="M35 28L25 85" stroke="#D98E04" strokeWidth="8" strokeLinecap="round" />
-        <path d="M65 28L75 85" stroke="#D98E04" strokeWidth="8" strokeLinecap="round" />
-        <path d="M30 55H70" stroke="#D98E04" strokeWidth="8" strokeLinecap="round" />
-        <path d="M72 18C78 18 82 22 78 30C74 38 65 42 50 42" stroke="#15803D" strokeWidth="6" strokeLinecap="round" />
-        <path d="M50 42C35 42 22 46 22 56C22 66 32 72 50 72" stroke="#15803D" strokeWidth="6" strokeLinecap="round" />
-        <path d="M50 72C68 72 74 82 70 92" stroke="#15803D" strokeWidth="6" strokeLinecap="round" />
-        <circle cx="75" cy="20" r="2" fill="#EAB308" />
-      </svg>
+      <img src="/assets/images/logo.png" alt="AnyReps Loader" className="w-20 h-20 object-contain animate-pulse" />
       <div className="absolute -inset-8 border-2 border-primary/20 rounded-full"></div>
       <div className="absolute -inset-8 border-t-2 border-primary rounded-full animate-spin"></div>
     </div>

@@ -78,7 +78,7 @@ export const ShippingCalculator: React.FC = () => {
                 </button>
 
                 <div className="flex items-center gap-3">
-                    <Calculator size={28} className="text-primary" />
+                    <img src="/assets/images/img1.png" alt="Calculator" className="w-8 h-8 object-contain" />
                     <h1 className="text-xl md:text-2xl font-bold text-white">Shipping Calculator</h1>
                 </div>
             </div>

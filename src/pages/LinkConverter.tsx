@@ -191,7 +191,7 @@ export const LinkConverter: React.FC = () => {
                 </button>
 
                 <div className="flex items-center gap-3">
-                    <Link size={28} className="text-primary" />
+                    <img src="/assets/images/link.png" alt="Link Converter" className="w-8 h-8 object-contain" />
                     <h1 className="text-xl md:text-2xl font-bold text-white">Link Converter</h1>
                 </div>
             </div>
@@ -228,8 +228,8 @@ export const LinkConverter: React.FC = () => {
                                         key={agent.id}
                                         onClick={() => setSelectedAgent(agent.id)}
                                         className={`p-3 rounded-xl border flex flex-col items-center justify-center gap-2 transition-all ${selectedAgent === agent.id
-                                                ? 'bg-primary/20 border-primary text-white'
-                                                : 'bg-[#1A1A1A] border-white/5 text-[#666] hover:border-white/20 hover:text-white'
+                                            ? 'bg-primary/20 border-primary text-white'
+                                            : 'bg-[#1A1A1A] border-white/5 text-[#666] hover:border-white/20 hover:text-white'
                                             }`}
                                     >
                                         <img src={agent.logo} alt={agent.name} className="w-6 h-6 rounded-sm object-contain" />

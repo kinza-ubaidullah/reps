@@ -175,7 +175,7 @@ export const QCPhotos: React.FC = () => {
                 </button>
 
                 <div className="flex items-center gap-3">
-                    <Camera size={28} className="text-primary" />
+                    <img src="/assets/images/qc.png" alt="QC Photo Finder" className="w-8 h-8 object-contain" />
                     <h1 className="text-xl md:text-2xl font-bold text-white">QC Photo Finder</h1>
                 </div>
             </div>
