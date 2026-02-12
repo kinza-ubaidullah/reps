@@ -20,7 +20,7 @@ import {
 import { identifyProductFromImage } from '../services/geminiService';
 import { searchTaobaoProducts, fetchItemDetails } from '../services/taobaoService';
 import { searchProducts1688, getProductDetails1688 } from '../services/product1688Service';
-import { Product } from '../types';
+import { Product, User, Rank } from '../types';
 import { useWishlist } from '../context/WishlistContext';
 
 const formatImageUrl = (url: string) => {
@@ -31,7 +31,7 @@ const formatImageUrl = (url: string) => {
 };
 
 // Modal for advanced product details
-const ProductDetailModal = ({ product, onClose }: { product: Product, onClose: () => void }) => {
+const ProductDetailModal = ({ product, user, onClose }: { product: Product, user: User | null, onClose: () => void }) => {
     const [details, setDetails] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -195,14 +195,20 @@ const ProductDetailModal = ({ product, onClose }: { product: Product, onClose: (
                     )}
 
                     <div className="mt-auto pt-6 flex flex-col sm:flex-row gap-4">
-                        <a
-                            href={product.link}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="flex-1 bg-white text-black font-bold py-4 rounded-2xl flex items-center justify-center gap-2 hover:bg-gray-200 transition-all"
-                        >
-                            <ExternalLink size={18} /> Open Source
-                        </a>
+                        {user?.rank === Rank.ADMIN ? (
+                            <a
+                                href={product.link}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="flex-1 bg-white text-black font-bold py-4 rounded-2xl flex items-center justify-center gap-2 hover:bg-gray-200 transition-all text-sm"
+                            >
+                                <ExternalLink size={18} /> Open Source
+                            </a>
+                        ) : (
+                            <div className="flex-1 bg-white/5 border border-white/10 text-[#555] font-bold py-4 rounded-2xl flex items-center justify-center gap-2 cursor-not-allowed text-xs">
+                                <AlertCircle size={16} /> Restricted Link
+                            </div>
+                        )}
                         <button
                             className="flex-1 bg-primary/10 text-primary border border-primary/20 hover:bg-primary hover:text-black font-bold py-4 rounded-2xl transition-all"
                         >
@@ -215,7 +221,7 @@ const ProductDetailModal = ({ product, onClose }: { product: Product, onClose: (
     );
 };
 
-export const Search: React.FC = () => {
+export const Search: React.FC<{ user: User | null }> = ({ user }) => {
     const navigate = useNavigate();
     const [query, setQuery] = useState('');
     const [results, setResults] = useState<Product[]>([]);
@@ -261,7 +267,7 @@ export const Search: React.FC = () => {
                         id: String(item.itemId || item.id || Math.random()),
                         title: item.title || 'Untitled Product',
                         priceCNY: parseFloat(item.sku?.def?.price || item.price || 0),
-                        image: formatImageUrl(item.image || item.imageUrl || ''),
+                        image: formatImageUrl(item.image || item.imageUrl || item.pic_url || item.picUrl || ''),
                         platform: '1688' as const,
                         sales: item.sales || 0,
                         link: item.itemUrl || item.link || `https://detail.1688.com/offer/${item.itemId || item.id}.html`
@@ -324,7 +330,7 @@ export const Search: React.FC = () => {
                         id: item.itemId || item.id || String(Math.random()),
                         title: item.title || 'Untitled Product',
                         priceCNY: parseFloat(item.price) || 0,
-                        image: formatImageUrl(item.imageUrl || item.image || ''),
+                        image: formatImageUrl(item.imageUrl || item.image || item.pic_url || item.picUrl || ''),
                         platform: '1688' as const,
                         sales: item.sales || 0,
                         link: item.link || `https://detail.1688.com/offer/${item.itemId || item.id}.html`
@@ -520,6 +526,7 @@ export const Search: React.FC = () => {
             {selectedProduct && (
                 <ProductDetailModal
                     product={selectedProduct}
+                    user={user}
                     onClose={() => setSelectedProduct(null)}
                 />
             )}

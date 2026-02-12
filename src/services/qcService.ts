@@ -1,6 +1,13 @@
 import CryptoJS from 'crypto-js';
 import { getItemReviews1688, getProductDetails1688 } from './product1688Service';
 
+const formatImageUrl = (url: string) => {
+    if (!url) return '';
+    if (url.startsWith('//')) return `https:${url}`;
+    if (!url.startsWith('http')) return `https://${url.replace(/^\/+/, '')}`;
+    return url;
+};
+
 // --- CONFIGURATION ---
 let POINTSHAUL_APP_ID = '';
 let POINTSHAUL_SECRET_KEY = '';
@@ -128,13 +135,13 @@ const fetchFrom1688API = async (itemId: string): Promise<QCPhoto[]> => {
         let photos: QCPhoto[] = [];
 
         const detailRes = await getProductDetails1688(itemId);
-        const item = detailRes.result?.item || {};
+        const item = detailRes.result?.item || detailRes.item || {};
 
-        const galleryImages = item.images || [];
+        const galleryImages = item.images || item.pic_url || [];
         if (Array.isArray(galleryImages)) {
             galleryImages.forEach((img: string) => {
                 photos.push({
-                    url: img.startsWith('//') ? `https:${img}` : img,
+                    url: formatImageUrl(img),
                     agent: "Product Gallery",
                     date: "Original Listing",
                     provider: '1688Reviews' as any
@@ -204,7 +211,7 @@ const fetchFromRapidAPI = async (itemId: string): Promise<QCPhoto[]> => {
             if (Array.isArray(reviewImages)) {
                 reviewImages.forEach((pic: string) => {
                     photos.push({
-                        url: pic.startsWith('//') ? `https:${pic}` : pic,
+                        url: formatImageUrl(pic),
                         agent: "Review Photo",
                         date: review.date || "N/A",
                         provider: 'TaobaoReviews'

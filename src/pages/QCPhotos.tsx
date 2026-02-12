@@ -6,6 +6,13 @@ import { fetchQCPhotos, QCPhoto } from '../services/qcService';
 import { searchProducts1688 } from '../services/product1688Service';
 import { Product } from '../types';
 
+const formatImageUrl = (url: string) => {
+    if (!url) return '';
+    if (url.startsWith('//')) return `https:${url}`;
+    if (!url.startsWith('http')) return `https://${url.replace(/^\/+/, '')}`;
+    return url;
+};
+
 interface ProductCardSimpleProps {
     product: Product;
     onClick: () => void;
@@ -62,7 +69,7 @@ export const QCPhotos: React.FC = () => {
                         id: String(item.itemId || item.id || Math.random()),
                         title: item.title || 'Untitled Product',
                         priceCNY: parseFloat(item.sku?.def?.price || item.price || 0),
-                        image: item.image || item.imageUrl || '',
+                        image: formatImageUrl(item.image || item.imageUrl || item.pic_url || item.picUrl || ''),
                         platform: '1688' as const,
                         sales: item.sales || 0,
                         link: item.itemUrl || item.link || `https://detail.1688.com/offer/${item.itemId || item.id}.html`
@@ -136,7 +143,7 @@ export const QCPhotos: React.FC = () => {
                         id: String(item.itemId || item.id || Math.random()),
                         title: item.title || 'Untitled Product',
                         priceCNY: parseFloat(item.sku?.def?.price || item.price || 0),
-                        image: item.image || item.imageUrl || '',
+                        image: formatImageUrl(item.image || item.imageUrl || item.pic_url || item.picUrl || ''),
                         platform: '1688' as const,
                         sales: item.sales || 0,
                         link: item.itemUrl || item.link || `https://detail.1688.com/offer/${item.itemId || item.id}.html`

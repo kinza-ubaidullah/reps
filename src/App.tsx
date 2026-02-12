@@ -119,7 +119,7 @@ const App: React.FC = () => {
       if (!user && !api.isLoggedIn()) {
         setIsAuthOpen(true);
       }
-    }, 5000); // 5 seconds delay per latest instruction
+    }, 10000); // 10 seconds delay as requested
     return () => clearTimeout(timer);
   }, [user]);
 
@@ -161,11 +161,11 @@ const App: React.FC = () => {
               <Route path="/products" element={<Home />} />
               <Route path="/calculator" element={<ShippingCalculator />} />
               <Route path="/converter" element={<LinkConverter />} />
-              <Route path="/search" element={<Search />} />
+              <Route path="/search" element={<Search user={user} />} />
               <Route path="/tracking" element={<Tracking />} />
               <Route path="/qc" element={<QCPhotos />} />
               <Route path="/community/*" element={<Community user={user} />} />
-              <Route path="/sellers" element={<Sellers />} />
+              <Route path="/sellers" element={<Sellers user={user} />} />
               <Route path="/profile" element={user ? <Profile user={user} /> : <Navigate to="/" />} />
               <Route path="/wishlist" element={<Wishlist />} />
               <Route path="/admin" element={user?.rank === Rank.ADMIN ? <Admin /> : <Navigate to="/" replace />} />

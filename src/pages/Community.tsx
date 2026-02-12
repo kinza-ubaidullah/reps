@@ -1,11 +1,18 @@
 
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, NavLink, Navigate, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Plus, Flame, Search, FileSpreadsheet, Ghost, Users, Loader2, AlertCircle, ShoppingBag, ExternalLink, Camera } from 'lucide-react';
+import { ArrowLeft, Plus, Flame, Search, FileSpreadsheet, Ghost, Users, Loader2, AlertCircle, ShoppingBag, ExternalLink, Camera, Image as ImageIcon } from 'lucide-react';
 import { searchTaobaoProducts } from '../services/taobaoService';
 import { searchProducts1688 } from '../services/product1688Service';
 import { fetchSpreadsheets } from '../services/spreadsheetService';
 import { Product, Spreadsheet, User, Rank } from '../types';
+
+const formatImageUrl = (url: string) => {
+    if (!url) return '';
+    if (url.startsWith('//')) return `https:${url}`;
+    if (!url.startsWith('http')) return `https://${url.replace(/^\/+/, '')}`;
+    return url;
+};
 
 // Reusable Empty State Component
 const EmptyState = ({ icon: Icon, title, desc }: { icon: any, title: string, desc: string }) => (
@@ -18,7 +25,7 @@ const EmptyState = ({ icon: Icon, title, desc }: { icon: any, title: string, des
     </div>
 );
 
-const HotSelling = () => {
+const HotSelling = ({ user }: { user: User | null }) => {
     const navigate = useNavigate();
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
@@ -36,7 +43,7 @@ const HotSelling = () => {
                         id: String(item.itemId || item.id || Math.random()),
                         title: item.title || 'Untitled Product',
                         priceCNY: parseFloat(item.sku?.def?.price || item.price || 0),
-                        image: item.image || item.imageUrl || '',
+                        image: formatImageUrl(item.image || item.imageUrl || item.pic_url || item.picUrl || ''),
                         platform: '1688' as const,
                         sales: item.sales || 0,
                         link: item.itemUrl || item.link || `https://detail.1688.com/offer/${item.itemId || item.id}.html`
@@ -91,11 +98,25 @@ const HotSelling = () => {
                                 )}
                                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2">
                                     <button
-                                        onClick={(e) => { e.stopPropagation(); navigate('/qc', { state: { directUrl: p.link } }); }}
+                                        onClick={() => navigate('/qc', { state: { directUrl: p.link } })}
                                         className="bg-primary text-black text-[10px] font-bold px-3 py-1.5 rounded-lg transform translate-y-2 group-hover:translate-y-0 transition-transform flex items-center gap-1 shadow-lg"
                                     >
-                                        <Camera size={12} /> View QC
+                                        <Camera size={12} /> QC
                                     </button>
+                                    {user?.rank === Rank.ADMIN ? (
+                                        <a
+                                            href={p.link}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="bg-white text-black text-[10px] font-bold px-3 py-1.5 rounded-lg transform translate-y-2 group-hover:translate-y-0 transition-transform flex items-center gap-1 shadow-lg"
+                                        >
+                                            <ExternalLink size={12} /> Source
+                                        </a>
+                                    ) : (
+                                        <div className="bg-white/10 text-white/40 text-[10px] font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 cursor-not-allowed">
+                                            <AlertCircle size={12} /> Private
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                             <h3 className="font-bold truncate text-white text-sm mb-1 group-hover:text-primary transition-colors">{p.title}</h3>
@@ -145,7 +166,7 @@ const W2C = ({ user }: { user: User | null }) => {
                     id: String(item.itemId || item.id || Math.random()),
                     title: item.title || 'Untitled Product',
                     priceCNY: parseFloat(item.sku?.def?.price || item.price || 0),
-                    image: item.image || item.imageUrl || '',
+                    image: formatImageUrl(item.image || item.imageUrl || item.pic_url || item.picUrl || ''),
                     platform: '1688' as const,
                     sales: item.sales || 0,
                     link: item.itemUrl || item.link || `https://detail.1688.com/offer/${item.itemId || item.id}.html`
@@ -209,16 +230,22 @@ const W2C = ({ user }: { user: User | null }) => {
                                             onClick={() => navigate('/qc', { state: { directUrl: p.link } })}
                                             className="bg-primary text-black text-[10px] font-bold px-3 py-1.5 rounded-lg transform translate-y-2 group-hover:translate-y-0 transition-transform flex items-center gap-1 shadow-lg"
                                         >
-                                            <Camera size={12} /> View QC
+                                            <Camera size={12} /> QC
                                         </button>
-                                        <a
-                                            href={p.link}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            className="bg-white text-black text-[10px] font-bold px-3 py-1.5 rounded-lg transform translate-y-2 group-hover:translate-y-0 transition-transform flex items-center gap-1 shadow-lg"
-                                        >
-                                            <ExternalLink size={12} /> Link
-                                        </a>
+                                        {user?.rank === Rank.ADMIN ? (
+                                            <a
+                                                href={p.link}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className="bg-white text-black text-[10px] font-bold px-3 py-1.5 rounded-lg transform translate-y-2 group-hover:translate-y-0 transition-transform flex items-center gap-1 shadow-lg"
+                                            >
+                                                <ExternalLink size={12} /> Source
+                                            </a>
+                                        ) : (
+                                            <div className="bg-white/10 text-white/40 text-[10px] font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 cursor-not-allowed">
+                                                <AlertCircle size={12} /> Private
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                                 <div className="p-4">
@@ -243,7 +270,7 @@ const W2C = ({ user }: { user: User | null }) => {
     );
 };
 
-const Spreadsheets = () => {
+const Spreadsheets = ({ user }: { user: User | null }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [sheets, setSheets] = useState<Spreadsheet[]>([]);
     const [loading, setLoading] = useState(true);
@@ -298,29 +325,34 @@ const Spreadsheets = () => {
                                 <div className="w-12 h-12 bg-green-900/20 text-green-500 rounded-xl flex items-center justify-center font-bold text-lg border border-green-500/20">
                                     {s.title.charAt(0)}
                                 </div>
-                                <div>
-                                    <h4 className="text-white font-bold group-hover:text-primary transition-colors">{s.title}</h4>
+                                <div className="flex-1 min-w-0">
+                                    <h4 className="text-white font-bold group-hover:text-primary transition-colors truncate">{s.title}</h4>
                                     <p className="text-[#666] text-xs font-bold uppercase tracking-wider">
-                                        {/* Use formatted date or default text */}
                                         {s.created_at ? new Date(s.created_at).toLocaleDateString() : 'Recent'} • {s.items} Items
                                     </p>
                                 </div>
                             </div>
-                            <div className="text-right flex flex-col items-end gap-2">
-                                <a
-                                    href={s.link}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="p-2 bg-[#222] rounded-lg text-white hover:text-primary transition-colors"
-                                >
-                                    <ExternalLink size={16} />
-                                </a>
-                                <span className="text-[10px] text-[#444] font-bold">by {s.author}</span>
+                            <div className="flex items-center gap-3">
+                                {user?.rank === Rank.ADMIN ? (
+                                    <a
+                                        href={s.link}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="p-2.5 bg-white text-black rounded-xl hover:bg-primary transition-colors shadow-lg"
+                                    >
+                                        <ExternalLink size={18} />
+                                    </a>
+                                ) : (
+                                    <div className="p-2.5 bg-white/5 text-white/20 rounded-xl border border-white/5 cursor-not-allowed">
+                                        <AlertCircle size={18} />
+                                    </div>
+                                )}
                             </div>
                         </div>
                     )) : (
-                        <div className="col-span-2 text-center py-10 text-[#666]">
-                            No spreadsheets found matching "{searchTerm}"
+                        <div className="col-span-2 text-center py-20 bg-[#111] border border-white/5 rounded-2xl border-dashed">
+                            <Ghost className="mx-auto text-[#222] mb-4" size={48} />
+                            <p className="text-[#666] font-bold uppercase tracking-widest text-sm">No spreadsheets found</p>
                         </div>
                     )}
                 </div>
@@ -378,9 +410,9 @@ export const Community: React.FC<{ user: User | null }> = ({ user }) => {
 
                 <Routes>
                     <Route path="/" element={<Navigate to="hot" replace />} />
-                    <Route path="hot" element={<HotSelling />} />
+                    <Route path="hot" element={<HotSelling user={user} />} />
                     <Route path="w2c" element={<W2C user={user} />} />
-                    <Route path="sheets" element={<Spreadsheets />} />
+                    <Route path="sheets" element={<Spreadsheets user={user} />} />
                 </Routes>
             </div>
         </div>

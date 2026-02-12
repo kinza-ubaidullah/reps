@@ -3,11 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Star, ShieldCheck, ArrowLeft, UserPlus, Search, Filter, X, Loader2 } from 'lucide-react';
-import { Seller } from '../types';
+import { Seller, User, Rank } from '../types';
 
 const API_BASE = 'http://localhost:3001/api';
 
-export const Sellers: React.FC = () => {
+export const Sellers: React.FC<{ user: User | null }> = ({ user }) => {
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState('');
     const [category, setCategory] = useState('All');
@@ -138,9 +138,15 @@ export const Sellers: React.FC = () => {
                                     <div className="flex items-center gap-1 text-primary font-bold justify-end text-lg">
                                         {seller.rating} <Star size={18} fill="currentColor" />
                                     </div>
-                                    <a href={seller.link || '#'} target="_blank" rel="noreferrer" className="text-[10px] text-[#444] font-bold uppercase tracking-widest mt-1 block group-hover:text-white transition-colors bg-[#1A1A1A] px-3 py-1 rounded-lg">
-                                        Visit Store
-                                    </a>
+                                    {user?.rank === Rank.ADMIN ? (
+                                        <a href={seller.link || '#'} target="_blank" rel="noreferrer" className="text-[10px] bg-white text-black font-bold uppercase tracking-widest mt-1 block px-3 py-1.5 rounded-lg hover:bg-primary transition-colors">
+                                            Visit Store
+                                        </a>
+                                    ) : (
+                                        <div className="text-[10px] text-[#444] font-bold uppercase tracking-widest mt-1 block bg-[#1A1A1A] px-3 py-1.5 rounded-lg cursor-not-allowed">
+                                            Locked
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         ))
